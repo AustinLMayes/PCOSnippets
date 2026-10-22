@@ -24,7 +24,7 @@ def grab_snippet(type_id, plan_id, snippet_id)
 end
 
 def insert_snippet(snippet_id, type_id, plan_id, top: false)
-  error "Snippet #{snippet_id} not found" unless File.exists?("snippets/#{snippet_id}.json")
+  error "Snippet #{snippet_id} not found" unless File.exist?("snippets/#{snippet_id}.json")
   data = JSON.parse(File.read("snippets/#{snippet_id}.json"))
   raise "Plan #{plan_id} not found" unless @pco_api.services.v2.service_types[type_id].plans[plan_id].exists?
   existing_ids = @pco_api.services.v2.service_types[type_id].plans[plan_id].items.get(per_page: 50)["data"].map { |item| item["id"] }
